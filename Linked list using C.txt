@@ -1,0 +1,374 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+
+struct Node *head=NULL;
+int len=0;
+
+
+int Length()
+{
+    len=0;
+    struct Node *ptr=head;
+    if(ptr==NULL)
+    {
+        len=0;
+    }
+    else
+    {
+        while(ptr!=NULL)
+        {
+            len++;
+            ptr=ptr->next;
+        }
+    }
+    return(len);
+}
+
+
+void MiddleElement_method1()
+{
+    len = Length();
+    struct Node *val1=head;
+    if(len<=2)
+    {
+        printf("THE LINKED LIST SIZE IS NOT VALID\n");
+    }
+    else
+    {
+        if(len%2!=0)
+        {
+            for(int i=0;i<len/2;i++)
+            {
+                val1 = val1->next;
+
+            }
+            printf("THE MIDDLE VALUE IS -> %d\n",val1->data);
+        }
+        else
+        {
+            struct Node* val2 = NULL;
+            for(int i=1;i<len/2;i++)
+            {
+                val1 = val1->next;
+                val2 = val1->next;
+            }
+            printf("THE MIDDLE VALUES ARE -> %d and %d\n",val1->data,val2->data);
+        }
+    }
+}
+
+
+void MiddleElement_method2()
+{
+
+    if(head == NULL || head->next ==NULL || head->next->next == NULL)
+    {
+        printf("THE LINKED LIST SIZE IS NOT VALID\n");
+    }
+
+    else
+    {
+        struct Node *fast=head,*slow=head;
+        while(1)
+        {
+            fast = fast->next->next;
+            if(fast==NULL)
+            {
+                printf("THE MIDDLE ELEMENTS ARE -> %d and %d\n",slow->data,slow->next->data);
+                break;
+            }
+            slow = slow->next;
+            if(fast->next == NULL )
+            {
+                printf("THE MIDDLE ELEMENT IS -> %d\n",slow->data);
+                break;
+            }
+        }
+    }
+    return;
+}
+
+
+void Reverse()
+{
+    struct Node *prev=NULL,*current=head, *next=NULL;
+    if(head==NULL)
+    {
+        printf("THE LINKED LIST IS EMPTY");
+    }
+    else
+    {
+        while(current!=NULL)
+        {
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+        head = prev;
+        printf("LINKED LIST REVERSED\n");
+    }
+}
+
+
+void Delete()
+{
+    struct Node *ptr=head,*temp=NULL;
+    int ch2;
+    printf("PRESS 1 TO DELETE FROM END, PRESS 2 TO DELETE FROM BEGINNING, PRESS 3 TO DELETE FROM A SPECIFIED POSITION -> ");
+    scanf("%d",&ch2);
+    if(ptr==NULL)
+    {
+        printf("THE LINKED LIST IS EMPTY - hence, DELETION is not POSSIBLE.\n");
+    }
+    else if(ch2==1 || ch2==2 || ch2==3)
+    {
+        if(ch2==1)
+        {
+            if(ptr->next == NULL)
+            {
+                head = NULL;
+                free(ptr);
+            }
+            else
+            {
+                while(ptr->next!=NULL)
+                {
+                    temp=ptr;
+                    ptr=ptr->next;
+                }
+                temp->next=NULL;
+                free(ptr);
+                printf("DELETED.\n");
+            }
+        }
+        else if(ch2==2)
+        {
+            head = head->next;
+            free(ptr);
+            printf("DELETED.\n");
+        }
+        else if(ch2==3)
+        {
+            int pos;
+            printf("Enter the position from 1 to %d from which you wish to delete -> ",len=Length());
+            scanf("%d",&pos);
+            if(pos==1)
+            {
+                head = head->next;
+                free(ptr);
+                printf("DELETED.\n");
+
+            }
+            else if(pos>1 && pos<=len)
+            {
+                int cnt=1;
+                struct Node *temp;
+                while(cnt!=pos)
+                {
+                    temp=ptr;
+                    ptr=ptr->next;
+                    cnt++;
+                }
+                temp->next=ptr->next;
+                free(ptr);
+                printf("DELETED.\n");
+            }
+            else
+            {
+                printf("INVALID POSITION.");
+            }
+        }
+    }
+    else
+    {
+        printf("NO ELEMENT DELETED\n");
+        printf("RETURNING ......... \n");
+    }
+}
+
+
+void Search()
+{
+    struct Node *ptr=head;
+    int val,cnt=0;
+    printf("Enter the number to be searched -> ");
+    scanf("%d",&val);
+    if(ptr == NULL)
+    {
+        printf("THE LINKNED LIST IS EMPTY, THEREFORE VALUE CANNOT BE SEARCHED.");
+    }
+    else
+    {
+        while(ptr!=NULL)
+        {
+            cnt++;
+            if(ptr->data == val)
+            {
+                printf("THE VALUE IS PRESENT AT POSITION -> %d.\n",cnt);
+                return;
+            }
+            ptr=ptr->next;
+        }
+        printf("THE VALUE IS NOT PRESENT IN THE LINKED LIST.\n");
+    }
+
+}
+
+
+
+void Display()
+{
+    struct Node *ptr=head;
+    if(ptr==NULL)
+    {
+        printf("THE LINKED LIST IS EMPTY.\n");
+    }
+    else
+    {
+        printf("LINKED LIST -> ");
+        while(ptr!=NULL)
+        {
+            printf("%d ",ptr->data);
+            ptr=ptr->next;
+        }
+        printf(".\n");
+    }
+}
+
+
+void Insert()
+{
+    int ch1,key;
+    struct Node *newnode,*ptr;
+    printf("PRESS 1 to INSERT at the END, 2 to INSERT at the BEGINNING, 3 to INSERT at a SPECIFIED POSITION in BETWEEN, 0 to EXIT -> ");
+    scanf("%d",&ch1);
+    if(ch1==1 || ch1==2 || ch1==3)
+    {
+        newnode = (struct Node*)malloc(sizeof(struct Node));
+        printf("Enter the element to be inserted -> ");
+        scanf("%d",&key);
+        newnode->data=key;
+        newnode->next=NULL;
+        if(ch1==1)
+        {
+            ptr=head;
+            if(ptr == NULL)
+            {
+                head = newnode;
+            }
+            else
+            {
+                while(ptr->next!=NULL)
+                {
+                    ptr=ptr->next;
+                }
+                ptr->next = newnode;
+            }
+            printf("INSERTED.\n");
+        }
+        else if(ch1==2)
+        {
+            ptr = head;
+            head = newnode;
+            newnode->next = ptr ;
+            printf("INSERTED.\n");
+
+        }
+        else if(ch1==3)
+        {
+            ptr=head;
+            int pos,cnt=1;
+            len = Length();
+            printf("Enter the position from 1 to %d in which you wish to enter the node -> ",len+1);
+            scanf("%d",&pos);
+            if(pos==1)
+            {
+                head = newnode;
+               newnode->next = ptr;
+               printf("INSERTED.\n");
+            }
+            else if(pos>1 && pos<=len)
+            {
+                struct Node *temp=NULL;
+                while(cnt!=pos)
+                {
+                    temp=ptr;
+                    ptr=ptr->next;
+                    cnt++;
+                }
+                newnode->next=ptr;
+                temp->next=newnode;
+                printf("INSERTED.\n");
+            }
+            else if(pos==len+1)
+            {
+
+                while(ptr->next!=NULL)
+                {
+                    ptr=ptr->next;
+                }
+                ptr->next = newnode;
+                printf("INSERTED.\n");
+            }
+            else
+            {
+                printf("INVALID POSITION.\n");
+            }
+        }
+    }
+    else
+    {
+        printf("NO ELEMENT INSERTED.\n");
+        printf("RETURNING .......... \n");
+    }
+
+}
+
+
+int main()
+{
+    int ch;
+    while(1)
+    {
+        printf("\nPRESS 1 for INSERTION, 2 for DELETION, 3 to DISPLAY the LINKED LIST, 4 to SEARCH an ELEMENT, 5 to FIND the LENGTH of the LINKEDLIST, \n6 to REVERSE the LINKED LIST, 7 to FIND the MIDDLE ELEMENT by METHOD 1, 8 to FIND the MIDDLE ELEMENT by METHOD 2 -> ");
+        scanf("%d",&ch);
+        if(ch==1)
+            Insert();
+
+        else if(ch==2)
+            Delete();
+
+        else if(ch==3)
+            Display();
+
+        else if(ch==4)
+            Search();
+
+        else if(ch==5)
+            {
+                len=Length();
+                printf("THE LENGTH OF LINKED LIST IS -> %d.\n",len);
+            }
+
+        else if(ch==6)
+            Reverse();
+
+        else if(ch==7)
+            MiddleElement_method1();
+
+        else if(ch==8)
+            MiddleElement_method2();
+
+    }
+    return 0;
+
+    }

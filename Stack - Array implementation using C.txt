@@ -1,0 +1,106 @@
+#include<stdio.h>
+#define SIZE 10
+
+int stack[SIZE];
+int sz,top=-1;
+
+
+int IsEmpty()
+{
+    if(top == -1)
+        return 1;
+    else
+        return 0;
+}
+
+
+int IsFull()
+{
+    if(top == SIZE-1)
+        return 1;
+    else
+        return 0;
+}
+
+
+void Push()
+{
+    sz = IsFull();
+    if(sz==1)
+    {
+        printf("PUSH OPERATION NOT POSSIBLE - THE STACK IS FULL.\n");
+        return;
+    }
+    int val;
+    top++;
+    printf("Enter the value to be PUSHED into the STACK -> ");
+    scanf("%d",&val);
+    stack[top]=val;
+    printf("THE VALUE HAS BEEN PUSHED.\n");
+}
+
+
+void Pop()
+{
+    sz = IsEmpty();
+    if(sz==1)
+    {
+        printf("POP OPERATION NOT POSSIBLE - THE STACK IS EMPTY.\n");
+        return;
+    }
+    printf("THE VALUE %d HAS BEEN POPPED.\n",stack[top]);
+    top--;
+
+}
+
+
+void Peek()
+{
+    sz = IsEmpty();
+    if(sz==1)
+    {
+        printf("THE STACK IS EMPTY.\n");
+        return;
+    }
+    printf("THE VALUE AT THE TOP OF THE STACK IS -> %d.\n",stack[top]);
+}
+
+
+int main()
+{
+    int ch;
+    while(1)
+    {
+        printf("PRESS 1 to PUSH, 2 to POP, 3 to PEEK, 4 for IS_EMPTY, 5 for IS_FULL, 0 to EXIT -> ");
+        scanf("%d",&ch);
+        if(ch==1)
+            Push();
+        else if(ch==2)
+            Pop();
+        else if(ch==3)
+            Peek();
+        else if(ch==4)
+        {
+            sz = IsEmpty();
+            if(sz==1)
+                printf("THE STACK IS EMPTY.\n");
+            else
+                printf("THE STACK IS NOT EMPTY.\n");
+        }
+        else if(ch==5)
+        {
+            sz = IsFull();
+            if(sz==1)
+                printf("THE STACK IS FULL.\n");
+            else
+                printf("THE STACK IS NOT FULL.\n");
+        }
+        else if(ch==0)
+        {
+            printf("TERMINATING THE PROGRAM.\n");
+            break;
+        }
+    }
+    printf("\n..... THANK YOU .....\n");
+    return 0;
+}
