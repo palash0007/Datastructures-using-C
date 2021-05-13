@@ -1,0 +1,94 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct stack
+{
+    int data;
+    struct stack *next;
+};
+
+struct stack *head = NULL;
+int sz;
+
+
+int IsEmpty()
+{
+    if(head==NULL)
+        return 1;
+    else
+        return 0;
+}
+
+
+void Push()
+{
+    int val;
+    struct stack *newnode;
+    newnode = (struct stack*)malloc(sizeof(struct stack));
+    printf("Enter the value to be Pushed -> ");
+    scanf("%d",&val);
+    newnode->data = val;
+    newnode->next = head;
+    head = newnode;
+    printf("VALUE PUSHED.\n");
+}
+
+
+void Pop()
+{
+    sz = IsEmpty();
+    if(sz)
+        printf("THE STACK IS EMPTY - POP operation not possible.\n");
+    else
+    {
+        struct stack *ptr;
+        ptr = head;
+        head = head->next;
+        printf("VALUE POPPED IS -> %d.\n",ptr->data);
+        free(ptr);
+    }
+
+}
+
+
+void Peek()
+{
+    sz=IsEmpty();
+    if(sz)
+        printf("STACK IS EMPTY.\n");
+    else
+        printf("THE VALUE ON TOP OF THE STACK IS -> %d.\n",head->data);
+}
+
+
+int main()
+{
+    int ch;
+    while(1)
+    {
+        printf("PRESS 1 to PUSH, 2 to POP, 3 for IsEmpty, 4 to PEEK, 0 to EXIT -> ");
+        scanf("%d",&ch);
+        if(ch==1)
+            Push();
+
+        else if(ch==2)
+            Pop();
+
+        else if(ch==3)
+        {
+            sz=IsEmpty();
+            if(sz==1)
+                printf("THE STACK IS EMPTY - UNDERFLOW.\n");
+            else
+                printf("THE STACK IS NOT EMPTY.\n");
+        }
+
+        else if(ch==4)
+            Peek();
+
+        else if(ch==0)
+            break;
+    }
+    printf("..... THANK YOU .....");
+    return 0;
+}
