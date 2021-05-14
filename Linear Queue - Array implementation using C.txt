@@ -1,0 +1,110 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define SIZE 5
+
+int queue[SIZE];
+int front=-1,rear=-1,sz;
+
+
+void Enqueue()
+{
+    if(rear == SIZE-1)
+    {
+        printf("THE QUEUE IS FULL - ENQUEUE NOT POSSIBLE.\n\n");
+        return;
+    }
+    else if(front == -1)
+    {
+        rear=0;
+        front=0;
+    }
+    else
+        rear++;
+    int val;
+    printf("Enter the value to be inserted in the QUEUE -> ");
+    scanf("%d",&val);
+    queue[rear]=val;
+    printf("VALUE ADDED.\n\n");
+}
+
+
+void Dequeue()
+{
+    if(front == -1)
+    {
+        printf("THE QUEUE IS EMPTY - DEQUEUE NOT POSSIBLE.\n\n");
+        return;
+    }
+    else if(front == rear)
+    {
+        front = -1;
+        rear= -1;
+    }
+    else
+        front++;
+    printf("VALUE DELETED.\n\n");
+}
+
+
+void Peek()
+{
+    if(front == -1)
+    {
+        printf("THE QUEUE IS EMPTY - UNDERFLOW.\n\n");
+        return;
+    }
+    printf("THE VALUE AT FRONT OF THE QUEUE IS -> %d\n\n",queue[front]);
+}
+
+
+int IsEmpty()
+{
+    if(front==-1)
+        return 1;
+    else
+        return 0;
+}
+
+int IsFull()
+{
+    if(rear == SIZE-1)
+        return 1;
+    else
+        return 0;
+}
+int main()
+{
+    int ch;
+    while(1)
+    {
+        printf("PRESS 1 to ENQUEUE, 2 to DEQUEUE, 3 to PEEK, 4 for IsEmpty, 5 for IsFull, 0 to EXIT -> ");
+        scanf("%d",&ch);
+        if(ch==1)
+            Enqueue();
+        else if(ch==2)
+            Dequeue();
+        else if(ch==3)
+            Peek();
+        else if(ch==4)
+        {
+            sz=IsEmpty();
+            if(sz)
+                printf("THE QUEUE IS EMPTY - UNDERFLOW.\n\n");
+            else
+                printf("THE QUEUE IS NOT EMPTY.\n\n");
+        }
+        else if(ch==5)
+        {
+            sz=IsFull();
+            if(sz)
+                printf("THE QUEUE IS FULL - OVERFLOW.\n\n");
+            else
+                printf("THE QUEUE IS NOT FULL.\n\n");
+        }
+        else if(ch==0)
+            break;
+    }
+    printf("..... THANK YOU .....");
+    return 0;
+}
+

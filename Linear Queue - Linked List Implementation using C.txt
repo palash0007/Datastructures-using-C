@@ -1,0 +1,101 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct queue
+{
+    int data;
+    struct queue *next;
+};
+struct queue *front = NULL, *rear = NULL;
+int sz;
+
+void Enqueue()
+{
+    int val;
+    struct queue *newnode;
+    newnode = (struct queue *)malloc(sizeof(struct queue));
+    printf("Enter the value to ENQUEUE -> ");
+    scanf("%d",&val);
+    newnode -> data = val;
+    newnode -> next = NULL;
+    if(front == NULL)
+    {
+        rear = newnode;
+        front = newnode;
+    }
+    else
+        {
+            rear -> next = newnode;
+            rear = newnode;
+        }
+    printf("VALUE ADDED.\n\n");
+}
+
+
+void Dequeue()
+{
+    if (front == NULL)
+    {
+        printf("QUEUE IS EMPTY - DEQUEUE NOT POSSIBLE.\n\n");
+        return;
+    }
+    else
+    {
+        struct queue *ptr;
+        ptr = front;
+        front = front -> next;
+        if(front == NULL)
+            rear = NULL;
+        printf("THE DEQUEUED VALUE IS %d.\n\n",ptr->data);
+        free(ptr);
+    }
+}
+
+
+void Peek()
+{
+    if(front == NULL)
+    {
+        printf("QUEUE IS EMPTY - UNDERFLOW.\n\n");
+        return;
+    }
+    printf("THE VALUE AT FRONT OF THE QUEUE IS -> %d.\n\n",front->data);
+}
+
+
+int IsEmpty()
+{
+    if(front==NULL)
+        return 1;
+    else
+        return 0;
+}
+
+
+int main()
+{
+    int ch;
+    while(1)
+    {
+        printf("PRESS 1 to ENQUEUE, 2 to DEQUEUE, 3 to PEEK, 4 for IsEmpty, 0 to EXIT -> ");
+        scanf("%d",&ch);
+        if(ch==1)
+            Enqueue();
+        else if(ch==2)
+            Dequeue();
+        else if(ch==3)
+            Peek();
+        else if(ch==4)
+        {
+            sz=IsEmpty();
+            if(sz)
+                printf("QUEUE IS EMPTY - UNDERFLOW.\n\n");
+            else
+                printf("QUEUE IS NOT EMPTY.\n\n");
+        }
+        else if(ch==0)
+            break;
+    }
+    printf("..... THANK YOU .....");
+    return 0;
+}
