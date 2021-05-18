@@ -1,18 +1,18 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
-struct Node
+//Creating the structure for Linked list Node
+struct Node                         
 {
     int data;
     struct Node *next;
 };
 
-
+//Declaring the necessarily required variables
 struct Node *head=NULL;
 int len=0;
 
-
+//Gives the LENGTH  of the Linked list
 int Length()
 {
     len=0;
